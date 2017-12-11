@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "First GIT MAC file"
+echo -e "First GIT MAC file"
