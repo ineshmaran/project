@@ -15,7 +15,7 @@ if [[ $input1 = $input2 ]]; then
   #Run DNS update command#
   yum install httpd -y
   systemctl start httpd
-  curl localhost
+  systemctl status httpd
   #####
   if [ $? -eq 0 ]; then
     unset PASSWORD
