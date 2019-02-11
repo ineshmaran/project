@@ -19,20 +19,15 @@ pipeline {
         def QA = '_qa'
     }
     stages {
-        stage('GIT SCM Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Ansible Playbook to stop the scheduler') {
             steps {
                 script {
                     if (params.ENVIRONMENT == 'DEV') {
-                        echo "ansible-playbook -i inventory/scheduler_release${DEV}.ini playbooks/scheduler_release_stop.yaml"
+                        sh 'ansible-playbook -i inventory/scheduler_release${DEV}.ini playbooks/scheduler_release_stop.yaml'
                     } else if (params.ENVIRONMENT == 'QA') {
-                        echo "ansible-playbook -i inventory/scheduler_release${QA}.ini playbooks/scheduler_release_stop.yaml"
+                        sh 'ansible-playbook -i inventory/scheduler_release${QA}.ini playbooks/scheduler_release_stop.yaml'
                     } else if (params.ENVIRONMENT == 'PROD') {
-                        echo "ansible-playbook -i inventory/scheduler_release.ini playbooks/scheduler_release_stop.yaml"
+                        sh 'ansible-playbook -i inventory/scheduler_release.ini playbooks/scheduler_release_stop.yaml'
                     } else {
                         currentBuild.result = 'FAILURE'
                         error ('Aborted')
@@ -58,11 +53,11 @@ pipeline {
             steps {
                 script {
                     if (params.ENVIRONMENT == 'DEV') {
-                        echo "ansible-playbook -i inventory/scheduler_release${DEV}.ini playbooks/scheduler_release_start.yaml"
+                        sh 'ansible-playbook -i inventory/scheduler_release${DEV}.ini playbooks/scheduler_release_start.yaml'
                     } else if (params.ENVIRONMENT == 'QA') {
-                        echo "ansible-playbook -i inventory/scheduler_release${QA}.ini playbooks/scheduler_release_start.yaml"
+                        sh 'ansible-playbook -i inventory/scheduler_release${QA}.ini playbooks/scheduler_release_start.yaml'
                     } else if (params.ENVIRONMENT == 'PROD') {
-                        echo "ansible-playbook -i inventory/scheduler_release.ini playbooks/scheduler_release_start.yaml"
+                        sh 'ansible-playbook -i inventory/scheduler_release.ini playbooks/scheduler_release_start.yaml'
                     } else {
                         currentBuild.result = 'FAILURE'
                         error ('Aborted')
