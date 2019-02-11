@@ -19,12 +19,12 @@ pipeline {
         def QA = '_qa'
     }
     stages {
-        stage('1. GIT SCM Checkout') {
+        stage('GIT SCM Checkout') {
             steps {
                 checkout scm
             }
         }
-        stage('2. Ansible Playbook to stop the scheduler') {
+        stage('Ansible Playbook to stop the scheduler') {
             steps {
                 script {
                     if (params.ENVIRONMENT == 'DEV') {
@@ -40,7 +40,7 @@ pipeline {
                 }
             }
         }
-        stage('3. User Input Check') {
+        stage('User Input Check') {
             steps {
                 script {
                     try {
@@ -54,7 +54,7 @@ pipeline {
                 }
             }
         }
-        stage('4. Ansible Playbook to start the scheduler') {
+        stage('Ansible Playbook to start the scheduler') {
             steps {
                 script {
                     if (params.ENVIRONMENT == 'DEV') {
