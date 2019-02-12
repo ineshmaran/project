@@ -22,3 +22,7 @@
     retries: 5
     delay: 10
     ignore_errors: yes
+    
+  - name: Updating Scheduler
+    shell: trp-enc add-global-parameter -f "{{ CLASHBOARD_VARIABLE }}" "{{ CLASHBOARD_VARIABLE_VERSION }}"
+    ignore_errors: yes
