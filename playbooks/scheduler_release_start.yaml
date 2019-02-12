@@ -2,9 +2,6 @@
 - hosts: scheduler_nodes
   remote_user: root
   tasks:
-  - name: "Waiting on you for code merge."
-    pause:
-      prompt: 'Has the config update (if any) for this release been merged?'
 
   - name: "Run Puppet on a loop, make sure it's clean"
     command: puppet-run -e production
