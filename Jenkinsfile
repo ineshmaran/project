@@ -2,13 +2,13 @@ pipeline {
     agent any
     parameters{
       string(
-        name: 'REL_TICKET',
-        description: 'Mention the REL Ticket to update the release status',
-        defaultValue: 'INESH_123')
+        name: 'TICKET',
+        description: 'Mention the ticket to update the release status',
+        defaultValue: '')
       string(
         name: 'VERSION',
         description: 'CLASHBOARD_VARIABLE_VERSION to release',
-        defaultValue: '200000-56')        
+        defaultValue: '')        
       choice(
         name: 'ENVIRONMENT',
         description: 'Select the environment in which you wish to run Ansible Playbook',
@@ -22,6 +22,8 @@ pipeline {
         stage('Ansible Playbook to stop the scheduler') {
             steps {
                 script {
+                    echo "$TICKET"
+                    echo "$VERSION"
                     if (params.ENVIRONMENT == 'DEV') {
                         sh 'ansible-playbook -i inventory/scheduler_release${DEV}.ini playbooks/scheduler_release_stop.yaml'
                     } else if (params.ENVIRONMENT == 'QA') {
