@@ -1,0 +1,32 @@
+---
+
+- hosts: scheduler_nodes
+  remote_user: root
+  tasks:
+
+  - name: "Run Puppet on a loop, make sure it's clean"
+    command: puppet-run -e production
+    register: clean
+    until: clean.rc == 0
+    retries: 5
+    delay: 10
+    ignore_errors: yes
+
+#  - name: "Waiting for Schedulers to drain"
+#    wait_for:
+#      delay: 1
+#      timeout: 300
+
+# Kill schedulers
+  - name: "Killing remaining schedulers"
+    shell: kill -15 $(pgrep [s]cheduler.pl)
+    ignore_errors: yes
+
+#  - name: "Waiting to check Schedulers"
+#    wait_for:
+#      delay: 10s
+#      timeout: 60
+
+  - name: "Killing remaining schedulers"
+    shell: kill -9 $(pgrep [s]cheduler.pl)
+    ignore_errors: yes
