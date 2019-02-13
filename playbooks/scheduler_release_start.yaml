@@ -7,8 +7,8 @@
     command: puppet-run -e production
     register: clean
     until: clean.rc == 0
-    retries: 5
-    delay: 10
+    retries: 2
+    delay: 5
     ignore_errors: yes
 
 - hosts: scheduler_nodes
@@ -19,10 +19,10 @@
     command: puppet-run -e production
     register: clean
     until: clean.rc == 0
-    retries: 5
-    delay: 10
+    retries: 2
+    delay: 5
     ignore_errors: yes
     
   - name: Updating Scheduler
-    shell: trp-enc add-global-parameter -f "{{ CLASHBOARD_VARIABLE }}" "{{ CLASHBOARD_VARIABLE_VERSION }}"
+    shell: trp-enc add-global-parameter -f "{{ CLASHBOARD_VARIABLE }}" "{{ lookup('env', 'VERSION') }}"
     ignore_errors: yes
