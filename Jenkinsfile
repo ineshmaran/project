@@ -11,29 +11,18 @@ pipeline {
         defaultValue: '')        
       choice(
         name: 'ENVIRONMENT',
-        description: 'Select the environment in which you wish to run Ansible Playbook',
-        choices: 'DEV\nQA\nPROD')
-    }
-    environment {
-        def DEV = '_dev'
-        def QA = '_qa'
+        description: 'Select the ini file (dev/qa/prod)',
+        choices: 'scheduler_release_dev.ini\nscheduler_release_qa.ini\nscheduler_release.ini')
     }
     stages {
         stage('Ansible Playbook to stop the scheduler') {
             steps {
                 script {
-                    echo "$TICKET"
-                    echo "$VERSION"
-                    if (params.ENVIRONMENT == 'DEV') {
-                        sh 'ansible-playbook -i inventory/scheduler_release${DEV}.ini playbooks/scheduler_release_stop.yaml'
-                    } else if (params.ENVIRONMENT == 'QA') {
-                        sh 'ansible-playbook -i inventory/scheduler_release${QA}.ini playbooks/scheduler_release_stop.yaml'
-                    } else if (params.ENVIRONMENT == 'PROD') {
-                        sh 'ansible-playbook -i inventory/scheduler_release.ini playbooks/scheduler_release_stop.yaml'
-                    } else {
-                        currentBuild.result = 'FAILURE'
-                        error ('Aborted')
+                    if (params.TICKET == '' || params.VERSION == '') {
+                        currentBuild.result = 'ABORTED'
+                        error ('TICKET or VERSION should not be empty')
                     }
+                    sh 'ansible-playbook -i inventory/$ENVIRONMENT playbooks/scheduler_release_stop.yaml'
                 }
             }
         }
@@ -54,16 +43,7 @@ pipeline {
         stage('Ansible Playbook to start the scheduler') {
             steps {
                 script {
-                    if (params.ENVIRONMENT == 'DEV') {
-                        sh 'ansible-playbook -i inventory/scheduler_release${DEV}.ini playbooks/scheduler_release_start.yaml'
-                    } else if (params.ENVIRONMENT == 'QA') {
-                        sh 'ansible-playbook -i inventory/scheduler_release${QA}.ini playbooks/scheduler_release_start.yaml'
-                    } else if (params.ENVIRONMENT == 'PROD') {
-                        sh 'ansible-playbook -i inventory/scheduler_release.ini playbooks/scheduler_release_start.yaml'
-                    } else {
-                        currentBuild.result = 'FAILURE'
-                        error ('Aborted')
-                    }
+                    sh 'ansible-playbook -i inventory/$ENVIRONMENT playbooks/scheduler_release_start.yaml'
                 }
             }
         }
