@@ -12,7 +12,7 @@ pipeline {
       choice(
         name: 'ENVIRONMENT',
         description: 'Select the ini file (dev/qa/prod)',
-        choices: 'scheduler_release_dev.ini\nscheduler_release_qa.ini\nscheduler_release.ini')
+        choices: 'scheduler_release_dev.ini')
     }
     stages {
         stage('Ansible Playbook to stop the scheduler') {
