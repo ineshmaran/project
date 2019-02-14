@@ -22,7 +22,7 @@ pipeline {
                         currentBuild.result = 'ABORTED'
                         error ('TICKET or VERSION should not be empty')
                     }
-                    sh 'ansible-playbook -i inventory/$ENVIRONMENT playbooks/scheduler_release_stop.yaml'
+                    sh 'ansible-playbook -i inventory/"$ENVIRONMENT" playbooks/scheduler_release_stop.yaml'
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
         stage('Ansible Playbook to start the scheduler') {
             steps {
                 script {
-                    sh 'ansible-playbook -i inventory/$ENVIRONMENT playbooks/scheduler_release_start.yaml'
+                    sh 'ansible-playbook -i inventory/"$ENVIRONMENT" playbooks/scheduler_release_start.yaml'
                 }
             }
         }
