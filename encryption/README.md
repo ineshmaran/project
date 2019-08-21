@@ -2,7 +2,7 @@ This is used to use the password in env variables insteads of plain text.
 
 1) When you use this script, it will prompt for username and password details. It holds the credentials and update in the config files. Here is the output of installing Apache server.
 
-######################################################################
+--
 
 $ ./encrypt_password.sh
 
@@ -36,9 +36,9 @@ Resolving Dependencies
 
 Dependencies Resolved
 
-==============================================================================================================================================
+
  Package                          Arch                        Version                                      Repository                    Size
-==============================================================================================================================================
+
 Installing:
  httpd                            x86_64                      2.4.6-80.el7.centos.1                        updates                      2.7 M
 Installing for dependencies:
@@ -48,7 +48,7 @@ Installing for dependencies:
  mailcap                          noarch                      2.1.41-2.el7                                 base                          31 k
 
 Transaction Summary
-==============================================================================================================================================
+
 Install  1 Package (+4 Dependent packages)
 
 Total download size: 3.0 M
@@ -59,7 +59,7 @@ Downloading packages:
 (3/5): apr-1.4.8-3.el7_4.1.x86_64.rpm                                                                                  | 103 kB  00:00:01
 (4/5): mailcap-2.1.41-2.el7.noarch.rpm                                                                                 |  31 kB  00:00:01
 (5/5): httpd-2.4.6-80.el7.centos.1.x86_64.rpm                                                                          | 2.7 MB  00:00:02
-----------------------------------------------------------------------------------------------------------------------------------------------
+
 Total                                                                                                         1.0 MB/s | 3.0 MB  00:00:02
 Running transaction check
 Running transaction test
@@ -103,16 +103,16 @@ $ systemctl status httpd
 Sep 29 02:50:18 puppetmaster.puppet.com systemd[1]: Starting The Apache HTTP Server...
 Sep 29 02:50:18 puppetmaster.puppet.com systemd[1]: Started The Apache HTTP Server.
 
-######################################################################
+--
 
 2) Once all installed and the exit status is success, the password line in the config file will be removed. So that you don't need to keep your password in the config file. Whenever you wish to do some steps, you can run this script, it will update the credentials in the config file. Mote: Please make sure to mention existing config file location.
 
 Here is the example conf file after successfully installed Apache.
 
-######################################################################
+--
 
 $ cat /etc/config_file.txt
 Username: inesh.maran@domain.com
 Password:
 
-######################################################################
+--
